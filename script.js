@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const initialConcentration = concentrations.EtA;
 
     // 反応速度定数
-    const k_rev = 0.2;  // エノラート生成の逆反応
-    const k_couple = 2.0; // カップリング反応
+    const k_rev = 1.5;  // エノラート生成の逆反応
+    const k_couple = 8.0; // カップリング反応
 
     // --- グラフの初期設定 ---
     const chartCanvas = document.getElementById('concentrationChart');
@@ -90,12 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- グラフの更新 ---
     function updateChart() {
-        concentrationChart.data.labels.push(simTime.toFixed(1));
-        concentrationChart.data.datasets[0].data.push(concentrations.EtA);
-        concentrationChart.data.datasets[1].data.push(concentrations.Enol);
-        concentrationChart.data.datasets[2].data.push(concentrations.Prod);
-        concentrationChart.update();
+        // グラフの更新頻度を少し落として負荷を軽減
+        if (Math.floor(simTime * 10) % 5 === 0) {
+            concentrationChart.data.labels.push(simTime.toFixed(1));
+            concentrationChart.data.datasets[0].data.push(concentrations.EtA);
+            concentrationChart.data.datasets[1].data.push(concentrations.Enol);
+            concentrationChart.data.datasets[2].data.push(concentrations.Prod);
+            concentrationChart.update();
+        }
     }
+    
     
     // --- キャンバスへの分子描画 ---
     // (これはあくまでイメージです。正確な分子動力学ではありません)
@@ -150,11 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
         resetSimulation(); // 状態をリセット
         animationFrameId = requestAnimationFrame(runSimulation);
         startButton.disabled = true;
+        slider.disabled = true; // ★追加: シミュレーション中はスライダーを無効化
     }
 
     function stopSimulation() {
         cancelAnimationFrame(animationFrameId);
         startButton.disabled = false;
+        slider.disabled = false; // ★追加: スライダーを有効化
     }
 
     function resetSimulation() {
