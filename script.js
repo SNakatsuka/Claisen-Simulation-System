@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- 画面表示の更新 ---
     function updateDisplay() {
         timeDisplay.textContent = simTime.toFixed(1);
-        const yieldPercent = (concentrations.Prod / initialConcentration) * 100;
+        const yieldPercent = (concentrations.Prod * 2 / initialConcentration) * 100;
         yieldDisplay.textContent = yieldPercent.toFixed(1);
     }
 
