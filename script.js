@@ -2,7 +2,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- HTML要素の取得 ---
     const canvas = document.getElementById('reactionCanvas');
     const ctx = canvas.getContext('2d');
-    const slider = document.getElementById('baseSlider');
+    const strengthSlider = document.getElementById('strengthSlider'); // ★変更: ID変更
+    const concentrationSlider = document.getElementById('concentrationSlider'); // ★追加
     const startButton = document.getElementById('startButton');
     const resetButton = document.getElementById('resetButton');
     const timeDisplay = document.getElementById('timeDisplay');
@@ -10,11 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- シミュレーション定数と変数 ---
     let simTime = 0;
-    const timeStep = 0.1; // 1フレームあたりの時間経過
-    const maxTime = 100; // シミュレーションの最大時間
+    const timeStep = 0.1; 
+    const maxTime = 150;
     let animationFrameId;
 
-    // 濃度 [mol/L]
     let concentrations = {
         EtA: 1.0,  // 酢酸エチル (原料)
         Enol: 0.0, // エノラート (中間体)
@@ -22,14 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     const initialConcentration = concentrations.EtA;
 
-    // 反応速度定数
-    const k_rev = 20.0;  // エノラート生成の逆反応
-    const k_couple = 2.0; // カップリング反応
+    // ★変更: カップリング反応の速度定数のみを固定値とする
+    const k_couple = 8.0; 
 
     // --- グラフの初期設定 ---
     const chartCanvas = document.getElementById('concentrationChart');
     const concentrationChart = new Chart(chartCanvas, {
         type: 'line',
+        data: { labels: [], datasets: [ /* ... 変更なし ... */ ] },
+        /* ... オプションは変更なし ... */
         data: {
             labels: [],
             datasets: [
@@ -40,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         options: {
             scales: { y: { beginAtZero: true, max: 1.1, title: { display: true, text: '濃度 (mol/L)' } } },
-            animation: { duration: 0 } // アニメーションをオフにして軽くする
+            animation: { duration: 0 } 
         }
     });
 
@@ -51,8 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // 1. 速度定数をスライダーから取得
-        const k_fwd = parseFloat(slider.value);
+        // ★★★ 1. 速度定数を2つのスライダーから動的に計算 ★★★
+        const k_fwd = parseFloat(strengthSlider.value); // 塩基の強さ → 正反応速度
+        const k_rev = 5 / parseFloat(concentrationSlider.value); // 塩基の濃度 → 逆反応速度 (逆数で抑制を表現)
 
         // 2. 反応速度の計算
         const rate_enol_formation = k_fwd * concentrations.EtA;
@@ -80,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 次のフレームを予約
         animationFrameId = requestAnimationFrame(runSimulation);
     }
-
+ 
     // --- 画面表示の更新 ---
     function updateDisplay() {
         timeDisplay.textContent = simTime.toFixed(1);
@@ -155,12 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
         animationFrameId = requestAnimationFrame(runSimulation);
         startButton.disabled = true;
         slider.disabled = true; // ★追加: シミュレーション中はスライダーを無効化
+        concentrationSlider.disabled = true; // ★追加
     }
 
     function stopSimulation() {
         cancelAnimationFrame(animationFrameId);
         startButton.disabled = false;
         slider.disabled = false; // ★追加: スライダーを有効化
+        concentrationSlider.disabled = false; // ★追加
     }
 
     function resetSimulation() {
