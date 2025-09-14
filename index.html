@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>クライゼン縮合 シミュレーター</title>
+    <title>クライゼン縮合 シミュレーター v2</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>クライゼン縮合 最適化シミュレーターv3</h1>
+    <h1>クライゼン縮合 最適化シミュレーター</h1>
     <div class="game-container">
         <div class="simulation-area">
             <h3>反応容器</h3>
@@ -17,14 +17,19 @@
         <div class="controls">
             <h3>コントロールパネル</h3>
             <div class="control-item">
-                <label for="baseSlider">塩基の強さ (エノラート生成速度)</label>
-                <input type="range" id="baseSlider" min="0.1" max="10" value="1" step="0.1">
+                <label for="strengthSlider">塩基の強さ (正反応速度)</label>
+                <input type="range" id="strengthSlider" min="0.1" max="10" value="4" step="0.1">
             </div>
+            <div class="control-item">
+                <label for="concentrationSlider">塩基の濃度 (逆反応抑制)</label>
+                <input type="range" id="concentrationSlider" min="1" max="10" value="5" step="0.1">
+            </div>
+
             <button id="startButton">スタート</button>
             <button id="resetButton">リセット</button>
             <div class="info-display">
                 <p>時間: <span id="timeDisplay">0.0</span> s</p>
-                <p>アセト酢酸エチル収率(原料消費ベース): <span id="yieldDisplay">0.0</span> %</p>
+                <p>アセト酢酸エチル収率: <span id="yieldDisplay">0.0</span> %</p>
             </div>
              <div class="legend">
                 <p><span class="dot blue"></span> 酢酸エチル (原料)</p>
