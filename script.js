@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 反応速度定数
     const k_rev = 1.5;  // エノラート生成の逆反応
-    const k_couple = 8.0; // カップリング反応
+    const k_couple = 1.0; // カップリング反応
 
     // --- グラフの初期設定 ---
     const chartCanvas = document.getElementById('concentrationChart');
