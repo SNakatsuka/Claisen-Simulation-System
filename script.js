@@ -29,8 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const chartCanvas = document.getElementById('concentrationChart');
     const concentrationChart = new Chart(chartCanvas, {
         type: 'line',
-        data: { labels: [], datasets: [ /* ... 変更なし ... */ ] },
-        /* ... オプションは変更なし ... */
         data: {
             labels: [],
             datasets: [
@@ -156,14 +154,14 @@ document.addEventListener('DOMContentLoaded', () => {
         resetSimulation(); // 状態をリセット
         animationFrameId = requestAnimationFrame(runSimulation);
         startButton.disabled = true;
-        slider.disabled = true; // ★追加: シミュレーション中はスライダーを無効化
+        strengthSlider.disabled = true; // ★追加: シミュレーション中はスライダーを無効化
         concentrationSlider.disabled = true; // ★追加
     }
 
     function stopSimulation() {
         cancelAnimationFrame(animationFrameId);
         startButton.disabled = false;
-        slider.disabled = false; // ★追加: スライダーを有効化
+        strengthSlider.disabled = false; // ★追加: スライダーを有効化
         concentrationSlider.disabled = false; // ★追加
     }
 
