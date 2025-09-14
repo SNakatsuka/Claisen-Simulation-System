@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const initialConcentration = concentrations.EtA;
 
     // 反応速度定数
-    const k_rev = 1.5;  // エノラート生成の逆反応
-    const k_couple = 1.0; // カップリング反応
+    const k_rev = 0.2;  // エノラート生成の逆反応
+    const k_couple = 2.0; // カップリング反応
 
     // --- グラフの初期設定 ---
     const chartCanvas = document.getElementById('concentrationChart');
