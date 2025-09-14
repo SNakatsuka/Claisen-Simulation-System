@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クライゼン縮合 シミュレーター</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>クライゼン縮合 最適化シミュレーター</h1>
+    <div class="game-container">
+        <div class="simulation-area">
+            <h3>反応容器</h3>
+            <canvas id="reactionCanvas" width="500" height="400"></canvas>
+        </div>
+        <div class="controls">
+            <h3>コントロールパネル</h3>
+            <div class="control-item">
+                <label for="baseSlider">塩基の強さ (エノラート生成速度)</label>
+                <input type="range" id="baseSlider" min="0.1" max="10" value="1" step="0.1">
+            </div>
+            <button id="startButton">スタート</button>
+            <button id="resetButton">リセット</button>
+            <div class="info-display">
+                <p>時間: <span id="timeDisplay">0.0</span> s</p>
+                <p>アセト酢酸エチル収率: <span id="yieldDisplay">0.0</span> %</p>
+            </div>
+             <div class="legend">
+                <p><span class="dot blue"></span> 酢酸エチル (原料)</p>
+                <p><span class="dot red"></span> エノラート (中間体)</p>
+                <p><span class="dot green"></span> アセト酢酸エチル (生成物)</p>
+            </div>
+        </div>
+    </div>
+    <div class="graph-container">
+        <h3>濃度変化グラフ</h3>
+        <canvas id="concentrationChart"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
