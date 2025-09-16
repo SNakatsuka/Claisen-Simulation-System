@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- シミュレーション定数と変数 ---
     let simTime = 0;
     const timeStep = 0.1; 
-    const maxTime = 150;
+    const maxTime = 100;
     let animationFrameId;
 
     let concentrations = {
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const initialConcentration = concentrations.EtA;
 
     // ★変更: カップリング反応の速度定数のみを固定値とする
-    const k_couple = 8.0; 
+    const k_couple = 25.0; 
 
     // --- グラフの初期設定 ---
     const chartCanvas = document.getElementById('concentrationChart');
